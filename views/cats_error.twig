@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% block body %}
+    <h1>An error occurred!</h1>
+    <div class="alert alert-info" role="alert">
+        <p>
+            Are you sure you've <a href="/schema">created the DB schema?</a>
+        </p>
+    </div>
+
+    <p>Here's the exact message:</p>
+
+    <pre><code>{{ exception.message }}</code></pre>
+
+    <p>
+        It happened in the file <code>{{ exception.file }}</code> on line
+        <code>{{ exception.line }}</code>
+    </p>
+{% endblock %}
