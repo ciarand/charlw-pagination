@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Symfony\Component\HttpFoundation\Response;
 
 $filename = __DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
@@ -55,25 +56,28 @@ $app->get("/cats/{page}", function ($page) use ($app) {
     /** @var Connection $db */
     $db = $app["db"];
 
-    // first we need a count of the number of cats (we use this to generate the pagination view
-    // stuff)
-    $total = $db->fetchColumn("SELECT COUNT(id) FROM cool_cats");
+    try {
+        // first we need a count of the number of cats (we use this to generate the pagination view
+        // stuff)
+        $total = $db->fetchColumn("SELECT COUNT(id) FROM cool_cats");
 
-    $numPages = (intval($total) / 100) + 1;
-    if ($page >= $numPages) {
-        return $app->redirect("/cats/" . ($numPages - 1));
+        $numPages = (intval($total) / 100) + 1;
+        if ($page >= $numPages) {
+            return $app->redirect("/cats/" . ($numPages - 1));
+        }
+
+        // next figure out the offset to use
+        $offset = intval((intval($page) - 1) * 100);
+
+        $statement = $db->query(
+            // the limit is the number to grab
+            // the offset is where we start from
+            // the order is backwards (most recent stuff goes on page 1, oldest goes last)
+            "SELECT id, name, color FROM cool_cats ORDER BY id DESC LIMIT 100 OFFSET {$offset} "
+        );
+    } catch (DBALException $e) {
+        return $app["twig"]->render("cats_error.twig", ["exception" => $e]);
     }
-
-    // next figure out the offset to use
-    $offset = intval((intval($page) - 1) * 100);
-
-    // now run the query
-    $statement = $db->query(
-        // the limit is the number to grab
-        // the offset is where we start from
-        // the order is backwards (most recent stuff goes on page 1, oldest goes on page 100 / w.e.)
-        "SELECT id, name, color FROM cool_cats ORDER BY id DESC LIMIT 100 OFFSET {$offset} "
-    );
 
     return $app["twig"]->render("cats.twig", [
         "page"  => $page,
@@ -95,7 +99,7 @@ $app->post("/schema", function () use ($app) {
     )
 SQL;
 
-    $result = $db->query($construct)->execute();
+    $result = $db->query($construct);
 
     return $app["twig"]->render("schema_result.twig", ["success" => $result]);
 });
