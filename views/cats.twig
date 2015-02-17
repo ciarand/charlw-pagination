@@ -1,17 +1,5 @@
 {% extends "base.twig" %}
 
-{% macro page_button(page, last_page, num) %}
-    {% if num <= last_page %}
-        <li{% if page == num %} class="active"{% endif %}>
-            <a href="/cats/{{ num }}">
-                {{ num }}{% if num == page %} <span class="sr-only">(current)</span>{% endif %}
-            </a>
-        </li>
-    {% endif %}
-{% endmacro %}
-
-{% import _self as util %}
-
 {% block title %}Cats - Page {{ page }}{% endblock %}
 
 {% block pager %}
