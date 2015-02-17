@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% block title %}Create the database schema!{% endblock %}
+
+{% block body %}
+    <h1>Create the database schema!</h1>
+
+    <div class="jumbotron">
+        <h1>Create the database schema!</h1>
+        <p class="lead">Click the button below to create the appropriate tables in the database</p>
+        <p>
+        <form method="post" action="/schema">
+            <input value="Create schema!" class="btn btn-block btn-primary" type="submit"/>
+        </form>
+        </p>
+    </div>
+{% endblock %}

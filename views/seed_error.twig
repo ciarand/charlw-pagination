@@ -1,0 +1,16 @@
+{% extends "seed_form.twig" %}
+
+{% block body %}
+    <div class="alert alert-danger" role="alert">
+        <p>Uh, oh there was an error seeding the database! Here's the exact message:</p>
+
+        <pre><code>{{ exception.message }}</code></pre>
+
+        <p>
+            It happened in the file <code>{{ exception.file }}</code> on line
+            <code>{{ exception.line }}</code>
+        </p>
+    </div>
+
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.twig" %}
+
+{% macro page_button(page, last_page, num) %}
+    {% if num <= last_page %}
+        <li{% if page == num %} class="active"{% endif %}>
+            <a href="/cats/{{ num }}">
+                {{ num }}{% if num == page %} <span class="sr-only">(current)</span>{% endif %}
+            </a>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as util %}
+
+{% block title %}Cats - Page {{ page }}{% endblock %}
+
+{% block pager %}
+<nav>
+    <ul class="pager">
+        <li class="previous">
+            {% if page <= (total / 100) %}
+                <a href="/cats/{{ page + 1 }}">
+                    <span aria-hidden="true">&larr;</span> Older
+                </a>
+            {% else %}
+                <span class="disabled">
+                    <span aria-hidden="true">&larr;</span> Older
+                </span>
+            {% endif %}
+        </li>
+        <li class="next">
+            {% if page > 1 %}
+                <a href="/cats/{{ page - 1 }}">
+                    Newer <span aria-hidden="true">&rarr;</span>
+                </a>
+            {% else %}
+                <span class="disabled">
+                    Newer <span aria-hidden="true">&rarr;</span>
+                </span>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block body %}
+    {{ block("pager") }}
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Color</td>
+        </tr>
+        </thead>
+        <tbody class="">
+        {% for cat in cats %}
+            <tr>
+                <td>{{ cat.id }}</td>
+                <td>{{ cat.name }}</td>
+                <td>{{ cat.color }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ block("pager") }}
+{% endblock %}

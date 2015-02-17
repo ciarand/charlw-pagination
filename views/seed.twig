@@ -1,0 +1,30 @@
+{% extends "seed_form.twig" %}
+
+{% block title %}Seed results{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="alert alert-success">Inserted new records</div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Color</td>
+        </tr>
+        </thead>
+        <tbody class="">
+        {% for id, cat in records %}
+            <tr>
+                {# zero-based index #}
+                <td>{{ id + 1 }}</td>
+                <td>{{ cat.name }}</td>
+                <td>{{ cat.color }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

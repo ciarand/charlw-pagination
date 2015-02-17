@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% block title %}Seed the database!{% endblock %}
+
+{% block body %}
+    <h1>Seed the database!</h1>
+
+    <div class="jumbotron">
+        <h1>Seed the database!</h1>
+        <p class="lead">Click the button below to populate the database with 100 random records.</p>
+        <p>
+            <form method="post" action="/seed">
+                <input value="Seed!" class="btn btn-block btn-primary" type="submit"/>
+            </form>
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Cat's emporium of cats{% endblock %}</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+            <div class="header">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation"{% if app.request.pathInfo == "/" %} class="active"{% endif %}>
+                            <a href="/">Pagination example</a>
+                        </li>
+                        <li role="presentation"{% if app.request.pathInfo == "/seed" %} class="active"{% endif %}>
+                            <a href="/seed">Seed the database</a>
+                        </li>
+                        <li role="presentation"{% if app.request.pathInfo == "/schema" %} class="active"{% endif %}>
+                            <a href="/schema">Create the DB schema</a>
+                        </li>
+                    </ul>
+                </nav>
+                <h3 class="text-muted">DBAL pagination demonstration</h3>
+            </div>
+
+            {% block body %}{% endblock %}
+
+            <footer class="footer">
+                <p>
+                    All code on this page is permissively licensed under the ISC license. For more
+                    information, you can read the <a href="/license">LICENSE</a>.
+                </p>
+            </footer>
+        </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% extends "schema_form.twig" %}
+
+{% block body %}
+    {% if success %}
+        <div class="alert alert-success">Database schema created successfully.</div>
+    {% else %}
+        <div class="alert alert-danger">There was an error creating the database schema.</div>
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
