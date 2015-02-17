@@ -1,0 +1,19 @@
+Fun with pagination
+===================
+
+Everything's in the view files and `web/index.php`.
+
+Running
+-------
+
+WARNING: You need `php` and `composer` available in your `$PATH`.
+
+[source,bash]
+----
+composer install -o --dev
+composer serve
+----
+
+License
+-------
+ISC, see the LICENSE file.
